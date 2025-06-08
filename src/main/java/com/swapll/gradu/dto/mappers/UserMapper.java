@@ -36,6 +36,7 @@ public class UserMapper {
         dto.setReferralCode(user.getReferralCode());
         dto.setMyReferralCode(user.getMyReferralCode());
         dto.setBio(user.getBio());
+        dto.setBalance(user.getBalance());
 
         if (user.getId() != null && user.getProfilePic() != null) {
             dto.setProfilePic("/api/users/" + user.getId() + "/profile-pic");

@@ -61,7 +61,7 @@ public class Offer {
     private PaymentMethod paymentMethod;
 
 
-    @NotBlank
+
     private String status = "active";
 
     @Column(name = "allow_swap")

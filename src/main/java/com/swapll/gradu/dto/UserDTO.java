@@ -22,6 +22,7 @@ public class UserDTO {
     private String referralCode;
     private String myReferralCode;
     private String bio;
+    private int balance;
     private String profilePic; // This will be a URL (not the image bytes)
 
 
