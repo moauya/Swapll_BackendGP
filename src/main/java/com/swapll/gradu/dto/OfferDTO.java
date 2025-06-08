@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OfferDTO {
+public class    OfferDTO {
 
     private int id;
     private String title;
