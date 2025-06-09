@@ -79,7 +79,7 @@ public class OfferService {
     public List<OfferDTO> getAllOffersByUserId(int ownerId) {
         List<Offer> offers = offerRepository.findByOwnerId(ownerId);
         if (offers.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner  is not found");
         }
 
         List<OfferDTO> offerDTOs = new ArrayList<>();
