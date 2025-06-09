@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 "/app/**",
                                 "/topic/**",
                                 "/queue/**",
-                                "/user/ref/**"
+                                "/api/user/ref/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -41,6 +41,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+
 
         return http.build();
     }
