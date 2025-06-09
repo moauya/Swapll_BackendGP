@@ -161,7 +161,7 @@ public class UserService {
             return user.get().getUserName();
         }
 
-        return "No User Have This referral Code";
+        return "Oops! Referral code not recognized";
 
     }
 
