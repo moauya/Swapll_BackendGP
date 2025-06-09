@@ -82,7 +82,7 @@ public class Offer {
     @JoinColumn(name="category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
 
