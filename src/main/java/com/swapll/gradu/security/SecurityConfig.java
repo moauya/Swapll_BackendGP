@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 "/app/**",
                                 "/topic/**",
                                 "/queue/**",
-                                "/user/ref/**"
+                                "/api/user/ref/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
