@@ -70,7 +70,7 @@ public class UserController {
                   .contentType(MediaType.IMAGE_JPEG)
                   .body(image);
      }
-     @GetMapping("/user/ref{refCode}")
+     @GetMapping("/user/ref/{refCode}")
      public String getUserNameByRefCode(@PathVariable String refCode){
 
           return userService.getUserNameByRefCode(refCode);
