@@ -59,7 +59,7 @@ public class UserService {
                 userRepository.existsByMyReferralCodeIgnoreCase(userDTO.getReferralCode())) {
 
             user.setBalance(user.getBalance() + 10);
-            User referrer = userRepository.findByMyReferralCode(userDTO.getReferralCode())
+            User referrer = userRepository.findByMyReferralCodeIgnoreCase(userDTO.getReferralCode())
                     .orElseThrow(() -> new RuntimeException("Referral code not found"));
             referrer.setBalance(referrer.getBalance() + 3);
             userRepository.save(referrer);
@@ -156,7 +156,7 @@ public class UserService {
     }
 
     public String getUserNameByRefCode(String refCode){
-        Optional<User> user=userRepository.findByMyReferralCode(refCode);
+        Optional<User> user=userRepository.findByMyReferralCodeIgnoreCase(refCode);
         if (user.isPresent()){
             return user.get().getUserName();
         }
