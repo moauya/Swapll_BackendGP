@@ -113,12 +113,7 @@ public class OfferService {
             offer.setDeliveryTime(dto.getDeliveryTime());
         if (dto.getPaymentMethod() != null)
             offer.setPaymentMethod(dto.getPaymentMethod());
-        if (dto.getStatus() != null)
-            offer.setStatus(dto.getStatus());
-        if (dto.getType() != null)
-            offer.setType(dto.getType());
 
-        offer.setAllowSwap(dto.isAllowSwap());
 
         if (dto.getCategoryId() != 0) {
             Category category = categoryRepository.findById(dto.getCategoryId())
