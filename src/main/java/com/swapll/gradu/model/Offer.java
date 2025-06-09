@@ -23,7 +23,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class git Offer {
+public class  Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
