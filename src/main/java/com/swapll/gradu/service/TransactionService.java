@@ -162,11 +162,6 @@ public class TransactionService {
         return dto;
     }
 
-
-
-
-
-
     @Transactional
     public TransactionDTO confirmTransaction(int transactionId) {
         Transaction transaction = transactionRepository.findById(transactionId)
@@ -278,4 +273,30 @@ public class TransactionService {
         return dto;
 
     }
+    public List<TransactionDTO> getAllTransactionsForUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        User currentUser = userDetails.getUser();
+
+        List<Transaction> transactions = transactionRepository.findByBuyerOrSeller(currentUser, currentUser);
+        List<TransactionDTO> dtos = new ArrayList<>();
+
+        for (Transaction transaction : transactions) {
+            TransactionDTO dto = new TransactionDTO();
+            dto.setId(transaction.getId());
+            dto.setCreatedAt(transaction.getCreatedAt());
+            dto.setUpdatedAt(transaction.getUpdatedAt());
+            dto.setStatus(transaction.getStatus());
+            dto.setBuyerId(transaction.getBuyer().getId());
+            dto.setSellerId(transaction.getSeller().getId());
+            dto.setOfferId(transaction.getOffer().getId());
+            dto.setBuyerConfirmed(transaction.isBuyerConfirmed());
+            dto.setSellerConfirmed(transaction.isSellerConfirmed());
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
+
 }

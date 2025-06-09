@@ -31,10 +31,10 @@ public class OfferMapper {
 
         if (offer.getOwner() != null) {
             dto.setUsername(offer.getOwner().getUserName());
-            dto.setFirstName(offer.getOwner().getFirstName());
-            dto.setLastName(offer.getOwner().getLastName());
         }
-
+        if(!offer.getReviews().isEmpty()){
+            dto.setNumberOfReviews(offer.getReviews().size());
+        }
 
 
         dto.setAverageRating(calculateAverageRating(offer.getReviews()));

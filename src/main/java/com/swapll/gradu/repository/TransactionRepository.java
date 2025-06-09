@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
     List<Transaction> findBySellerAndStatus(User seller, TransactionStatus transactionStatus);
+    List<Transaction> findByBuyerOrSeller(User buyer, User seller);
+
 }

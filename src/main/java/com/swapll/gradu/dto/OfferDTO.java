@@ -30,9 +30,9 @@ public class    OfferDTO {
     private int OwnerId;
     private LocalDateTime createdAt;
     private Double averageRating;
+    private int numberOfReviews;
 
     //user info
     private String username;
-    private String firstName;
-    private String lastName;
+
 }

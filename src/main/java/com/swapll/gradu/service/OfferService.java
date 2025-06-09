@@ -152,6 +152,7 @@ public class OfferService {
     public OfferDTO getOfferById(int id) {
         Offer offer=offerRepository.findById(id).orElseThrow(() -> new NoSuchElementException("there is no offer with this id"));
 
+
         return OfferMapper.toDTO(offer);
 
     }
