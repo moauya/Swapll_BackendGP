@@ -18,8 +18,6 @@ public class OfferMapper {
         dto.setPrice(offer.getPrice());
         dto.setDeliveryTime(offer.getDeliveryTime());
         dto.setPaymentMethod(offer.getPaymentMethod());
-        dto.setAllowSwap(offer.isAllowSwap());
-        dto.setStatus(offer.getStatus());
         dto.setType(offer.getType());
         dto.setCategoryId(offer.getCategory().getId());
         dto.setOwnerId(offer.getOwner().getId());
@@ -35,6 +33,9 @@ public class OfferMapper {
         if(!offer.getReviews().isEmpty()){
             dto.setNumberOfReviews(offer.getReviews().size());
         }
+        if(offer.getOwner().getProfilePic()!=null){
+            dto.setProfilePic(offer.getOwner().getProfilePic());
+        }
 
 
         dto.setAverageRating(calculateAverageRating(offer.getReviews()));
@@ -49,8 +50,7 @@ public class OfferMapper {
         offer.setPrice(dto.getPrice() * 5);
         offer.setDeliveryTime(dto.getDeliveryTime());
         offer.setPaymentMethod(dto.getPaymentMethod());
-        offer.setAllowSwap(dto.isAllowSwap());
-        offer.setStatus(dto.getStatus());
+
         offer.setType(dto.getType());
         offer.setCategory(category);
 

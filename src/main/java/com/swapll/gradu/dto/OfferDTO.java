@@ -22,17 +22,17 @@ public class    OfferDTO {
     private int price;
     private int deliveryTime;
     private PaymentMethod paymentMethod;
-    private boolean allowSwap;
-    private String status;
     private String image;
     private OfferType type;
-    private int categoryId;
+
     private int OwnerId;
     private LocalDateTime createdAt;
     private Double averageRating;
     private int numberOfReviews;
-
     //user info
     private String username;
+    private byte[]  profilePic;
+    //category info
+    private int categoryId;
 
 }

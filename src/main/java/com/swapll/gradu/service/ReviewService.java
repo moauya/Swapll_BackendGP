@@ -56,10 +56,15 @@ public class ReviewService {
 
         reviewRepository.save(review);
 
+        reviewDto.setFirstName(owner.getFirstName());
+        reviewDto.setLastName(owner.getLastName());
+        reviewDto.setUserName(owner.getUserName());
+        reviewDto.setProfilePicture(owner.getProfilePic());
         return reviewDto ;
     }
     public List<ReviewDTO> reviewsByOffer(int offerId) {
         List<Review> reviews = reviewRepository.findAllByOffer_Id(offerId);
+
 
         if (reviews.isEmpty()) {
             return Collections.emptyList();
@@ -68,6 +73,7 @@ public class ReviewService {
         List<ReviewDTO> reviewDTOs = new ArrayList<>();
 
         for (Review review : reviews) {
+            User user = review.getUser();
             ReviewDTO dto = new ReviewDTO();
             dto.setOfferId(offerId);
             dto.setUserId(review.getUser().getId());
@@ -75,6 +81,11 @@ public class ReviewService {
             dto.setComment(review.getComment());
             dto.setCreatedAt(review.getCreatedAt());
             reviewDTOs.add(dto);
+
+            dto.setFirstName(user.getFirstName());
+            dto.setLastName(user.getLastName());
+            dto.setUserName(user.getUserName());
+            dto.setProfilePicture(user.getProfilePic());
         }
 
         return reviewDTOs;

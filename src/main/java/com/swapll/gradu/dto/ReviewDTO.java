@@ -13,10 +13,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewDTO {
-
+    private int id;
     private int rating;
     private String comment;
     private LocalDateTime createdAt;
     private int offerId;
+
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private byte[] profilePicture;
+
+
     private int userId;
 }
