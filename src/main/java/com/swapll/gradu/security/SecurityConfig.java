@@ -28,11 +28,12 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/auth/**",    // allow login/register
-                                "/ws/**",          // allow websocket handshake
-                                "/app/**",         // allow STOMP destinations
-                                "/topic/**",       // allow subscriptions
-                                "/queue/**"        // allow private queues if used
+                                "/api/auth/**",
+                                "/ws/**",
+                                "/app/**",
+                                "/topic/**",
+                                "/queue/**",
+                                "/user/ref/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
