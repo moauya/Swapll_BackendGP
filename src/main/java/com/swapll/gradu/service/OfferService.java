@@ -1,5 +1,6 @@
 package com.swapll.gradu.service;
 
+import com.swapll.gradu.dto.SearchDTO;
 import com.swapll.gradu.model.Category;
 import com.swapll.gradu.model.Offer;
 import com.swapll.gradu.model.User;
@@ -170,8 +171,8 @@ public class OfferService {
         offerRepository.delete(offer);
     }
 
-    public List<OfferDTO> searchOffers(String keyword, Integer categoryId, Double minPrice, Double maxPrice, Boolean allowSwap) {
-        List<Offer> offers = offerRepository.search(keyword, categoryId, minPrice, maxPrice, allowSwap);
+    public List<OfferDTO> searchOffers(SearchDTO searchDTO) {
+        List<Offer> offers = offerRepository.search(searchDTO.getKeyword(), searchDTO.getCategoryId(), searchDTO.getMinPrice(), searchDTO.getMaxPrice(), searchDTO.getPaymentMethod());
 
         List<OfferDTO> dtos = new ArrayList<>();
         for (Offer offer : offers) {

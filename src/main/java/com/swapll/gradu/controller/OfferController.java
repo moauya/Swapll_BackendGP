@@ -1,7 +1,9 @@
 package com.swapll.gradu.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.swapll.gradu.Enum.PaymentMethod;
 import com.swapll.gradu.dto.OfferDTO;
+import com.swapll.gradu.dto.SearchDTO;
 import com.swapll.gradu.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -78,15 +80,9 @@ public class OfferController {
         offerService.deleteOffer(id);
     }
 
-    @GetMapping("/offers/search")
-    public List<OfferDTO> searchOffers(
-            @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) Integer categoryId,
-            @RequestParam(required = false) Double minPrice,
-            @RequestParam(required = false) Double maxPrice,
-            @RequestParam(required = false) Boolean allowSwap
-    ) {
-        return offerService.searchOffers(keyword, categoryId, minPrice, maxPrice, allowSwap);
+    @PostMapping("/offers/search")
+    public List<OfferDTO> searchOffers(@RequestBody SearchDTO searchDTO) {
+        return offerService.searchOffers(searchDTO);
     }
 
     @GetMapping("offers/recent")

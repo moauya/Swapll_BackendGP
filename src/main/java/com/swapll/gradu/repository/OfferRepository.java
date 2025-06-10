@@ -1,5 +1,6 @@
 package com.swapll.gradu.repository;
 
+import com.swapll.gradu.Enum.PaymentMethod;
 import com.swapll.gradu.model.Offer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,9 +28,9 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
       AND (:categoryId IS NULL OR o.category.id = :categoryId)
       AND (:minPrice IS NULL OR o.price >= :minPrice)
       AND (:maxPrice IS NULL OR o.price <= :maxPrice)
-      AND (:allowSwap IS NULL OR o.allowSwap = :allowSwap)
+      AND (:paymentMethod IS NULL OR o.paymentMethod = :paymentMethod)
 """)
-    List<Offer> search(@Param("keyword") String keyword, @Param("categoryId") Integer categoryId, @Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice, @Param("allowSwap") Boolean allowSwap);
+    List<Offer> search(@Param("keyword") String keyword, @Param("categoryId") Integer categoryId, @Param("minPrice") Integer minPrice, @Param("maxPrice") Integer maxPrice, @Param("paymentMethod") PaymentMethod paymentMethod);
 
 
 
