@@ -47,7 +47,7 @@ public class OfferMapper {
         Offer offer = new Offer();
         offer.setTitle(dto.getTitle());
         offer.setDescription(dto.getDescription());
-        offer.setPrice(dto.getPrice() * 5);
+        offer.setPrice(dto.getPrice() * 3);
         offer.setDeliveryTime(dto.getDeliveryTime());
         offer.setPaymentMethod(dto.getPaymentMethod());
 

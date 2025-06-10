@@ -108,7 +108,7 @@ public class OfferService {
         if (dto.getDescription() != null)
             offer.setDescription(dto.getDescription());
         if (dto.getPrice() != 0)
-            offer.setPrice(dto.getPrice());
+            offer.setPrice(dto.getPrice()*3);
         if (dto.getDeliveryTime() != 0)
             offer.setDeliveryTime(dto.getDeliveryTime());
         if (dto.getPaymentMethod() != null)
