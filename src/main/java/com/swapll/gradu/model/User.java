@@ -114,6 +114,10 @@ public class User {
         sellerTransactions.add(transaction);
         transaction.setSeller(this);
     }
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setUser(this);
+    }
 
 
 }
