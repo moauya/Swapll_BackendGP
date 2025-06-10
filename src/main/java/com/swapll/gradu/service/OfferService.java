@@ -125,6 +125,8 @@ public class OfferService {
             offer.setImage(image.getBytes());
         }
 
+        offer.setType(dto.getType());
+
         return OfferMapper.toDTO(offerRepository.save(offer));
     }
 
