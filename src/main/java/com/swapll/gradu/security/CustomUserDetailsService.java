@@ -1,5 +1,8 @@
 package com.swapll.gradu.security;
 
+
+
+import com.swapll.gradu.model.User;
 import com.swapll.gradu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +18,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        return userRepository.findByUserNameIgnoreCaseOrEmailIgnoreCase(usernameOrEmail, usernameOrEmail)
-                .map(CustomUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + usernameOrEmail));
+        User user = userRepository.findByUserNameOrEmailIgnoreCase(usernameOrEmail, usernameOrEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
+        return new CustomUserDetails(user);
+    }
+
+    public UserDetails loadUserById(int id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + id));
+        return new CustomUserDetails(user);
     }
 }
