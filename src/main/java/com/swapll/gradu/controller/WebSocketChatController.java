@@ -16,15 +16,33 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class WebSocketChatController {
 
     @Autowired private ChatService chatService;
     @Autowired private SimpMessagingTemplate messagingTemplate;
     @Autowired private UserRepository userRepository;
+
+
+    @GetMapping("/with/{receiverId}")
+    public ChatSummaryDTO getOrCreateChatWithUser(@PathVariable int receiverId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String usernameOrEmail = auth.getName();
+
+        User sender = userRepository.findByUserNameOrEmailIgnoreCase(usernameOrEmail, usernameOrEmail)
+                .orElseThrow();
+
+        Chat chat = chatService.getOrCreateChat(sender.getId(), receiverId);
+        return chatService.getChatSummary(chat, sender.getId());
+    }
 
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(@Payload ChatMessageDTO chatMessageDTO) {

@@ -92,4 +92,23 @@ public class ChatService {
             return dto;
         }).collect(Collectors.toList());
     }
+
+    public ChatSummaryDTO getChatSummary(Chat chat, int currentUserId) {
+        User other = chat.getSender().getId().equals(currentUserId)
+                ? chat.getReceiver()
+                : chat.getSender();
+
+        Message last = messageRepo.findTopByChatIdOrderByTimestampDesc(chat.getId());
+
+        ChatSummaryDTO dto = new ChatSummaryDTO();
+        dto.setChatId(chat.getId());
+        dto.setOtherUserId(other.getId());
+        dto.setOtherUsername(other.getUserName());
+        dto.setOtherPicture(Arrays.toString(other.getProfilePic()));
+        dto.setLastMessage(last != null ? last.getContent() : null);
+        dto.setLastMessageTime(last != null ? last.getTimestamp().toString() : null);
+
+        return dto;
+    }
+
 }
