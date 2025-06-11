@@ -50,7 +50,9 @@ public class AuthController {
 
         UserDTO registeredUser = userService.registerUser(userDTO, profilePic);
 
-        String token = jwtUtil.generateToken(new CustomUserDetails(UserMapper.toEntity(registeredUser)));
+        User user = userService.getUserByEmailOrUsername(registeredUser.getEmail());
+        String token = jwtUtil.generateToken(new CustomUserDetails(user));
+
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new RegisterResponse(token, registeredUser));

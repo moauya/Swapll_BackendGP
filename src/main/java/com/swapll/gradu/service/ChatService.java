@@ -10,8 +10,6 @@ import com.swapll.gradu.repository.ChatRepository;
 import com.swapll.gradu.repository.MessageRepository;
 import com.swapll.gradu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,6 +35,7 @@ public class ChatService {
                     return chatRepo.save(chat);
                 });
     }
+
     public MessageDTO saveMessageWithSender(User sender, ChatMessageDTO dto) {
         Chat chat = getOrCreateChat(sender.getId(), dto.getReceiverId());
 
@@ -48,35 +47,6 @@ public class ChatService {
 
         messageRepo.save(message);
 
-        MessageDTO response = new MessageDTO();
-        response.setSenderId(sender.getId());
-        response.setContent(message.getContent());
-        response.setTimestamp(message.getTimestamp());
-        return response;
-    }
-
-    public MessageDTO saveMessage(ChatMessageDTO dto) {
-        // Get authenticated user from SecurityContext
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String usernameOrEmail = authentication.getName();
-
-        // Lookup sender user by username or email
-        User sender = userRepo.findByUserNameOrEmailIgnoreCase(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() -> new NoSuchElementException("Authenticated user not found"));
-
-        // Get or create chat
-        Chat chat = getOrCreateChat(sender.getId(), dto.getReceiverId());
-
-        // Create and save message
-        Message message = new Message();
-        message.setChat(chat);
-        message.setSender(sender);
-        message.setContent(dto.getContent());
-        message.setTimestamp(LocalDateTime.now());
-
-        messageRepo.save(message);
-
-        // Prepare response DTO
         MessageDTO response = new MessageDTO();
         response.setSenderId(sender.getId());
         response.setContent(message.getContent());
@@ -110,6 +80,10 @@ public class ChatService {
         }).collect(Collectors.toList());
     }
 
+    public ChatSummaryDTO getOrCreateChatWithUser(int receiverId) {
+        throw new UnsupportedOperationException("This method must be implemented based on your auth context.");
+    }
+
     public ChatSummaryDTO getChatSummary(Chat chat, int currentUserId) {
         User other = chat.getSender().getId().equals(currentUserId)
                 ? chat.getReceiver()
@@ -127,5 +101,4 @@ public class ChatService {
 
         return dto;
     }
-
 }
