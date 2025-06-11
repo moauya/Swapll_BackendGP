@@ -45,19 +45,15 @@ public class WebSocketChatController {
     }
 
     @MessageMapping("/chat.sendMessage")
-    public void sendMessage(@Payload ChatMessageDTO chatMessageDTO) {
-        MessageDTO savedMessage = chatService.saveMessage(chatMessageDTO);
+    public void sendMessage(@Payload ChatMessageDTO dto) {
+        // Find sender manually based on senderId passed in message
+        User sender = userRepository.findById(dto.getSenderId())
+                .orElseThrow(() -> new RuntimeException("Invalid sender"));
 
-        // Get current authenticated user
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String usernameOrEmail = auth.getName();
-        User sender = userRepository.findByUserNameOrEmailIgnoreCase(usernameOrEmail, usernameOrEmail)
-                .orElseThrow();
+        Chat chat = chatService.getOrCreateChat(sender.getId(), dto.getReceiverId());
 
-        // Get the chat after message is saved
-        Chat chat = chatService.getOrCreateChat(sender.getId(), chatMessageDTO.getReceiverId());
+        MessageDTO savedMessage = chatService.saveMessageWithSender(sender, dto);
 
-        // Send the message to both users' chat topics
         messagingTemplate.convertAndSend("/topic/chat." + chat.getId(), savedMessage);
     }
 

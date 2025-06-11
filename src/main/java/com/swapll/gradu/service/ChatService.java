@@ -37,6 +37,23 @@ public class ChatService {
                     return chatRepo.save(chat);
                 });
     }
+    public MessageDTO saveMessageWithSender(User sender, ChatMessageDTO dto) {
+        Chat chat = getOrCreateChat(sender.getId(), dto.getReceiverId());
+
+        Message message = new Message();
+        message.setChat(chat);
+        message.setSender(sender);
+        message.setContent(dto.getContent());
+        message.setTimestamp(LocalDateTime.now());
+
+        messageRepo.save(message);
+
+        MessageDTO response = new MessageDTO();
+        response.setSenderId(sender.getId());
+        response.setContent(message.getContent());
+        response.setTimestamp(message.getTimestamp());
+        return response;
+    }
 
     public MessageDTO saveMessage(ChatMessageDTO dto) {
         // Get authenticated user from SecurityContext
